@@ -94,7 +94,7 @@ class Pix2PixModel(BaseModel):
         #print(slices[0].size(), slices[1].size())
         fake_AB = self.fake_AB_pool.query(torch.cat((slices[0], slices[1], self.fake_B), 1).data)
         #print(self.fake_B.size(), self.real_A.size())
-        print(fake_AB.size())
+        #print(fake_AB.size())
         pred_fake = self.netD(fake_AB.detach())
         self.loss_D_fake = self.criterionGAN(pred_fake, False)
 
@@ -141,10 +141,12 @@ class Pix2PixModel(BaseModel):
                             ])
 
     def get_current_visuals(self):
-        real_A = util.tensor2im(self.real_A.data)
+        slices = torch.split(self.real_A, 3, 1)
+        real_A1 = util.tensor2im(self.slices[0].data)
+        real_A2 = util.tensor2im(self.slices[1].data)
         fake_B = util.tensor2im(self.fake_B.data)
         real_B = util.tensor2im(self.real_B.data)
-        return OrderedDict([('real_A', real_A), ('fake_B', fake_B), ('real_B', real_B)])
+        return OrderedDict([('real_A1', real_A1),('real_A2', real_A2), ('fake_B', fake_B), ('real_B', real_B)])
 
     def save(self, label):
         self.save_network(self.netG, 'G', label, self.gpu_ids)
