@@ -142,8 +142,8 @@ class Pix2PixModel(BaseModel):
 
     def get_current_visuals(self):
         slices = torch.split(self.real_A, 3, 1)
-        real_A1 = util.tensor2im(self.slices[0].data)
-        real_A2 = util.tensor2im(self.slices[1].data)
+        real_A1 = util.tensor2im(slices[0].data)
+        real_A2 = util.tensor2im(slices[1].data)
         fake_B = util.tensor2im(self.fake_B.data)
         real_B = util.tensor2im(self.real_B.data)
         return OrderedDict([('real_A1', real_A1),('real_A2', real_A2), ('fake_B', fake_B), ('real_B', real_B)])
