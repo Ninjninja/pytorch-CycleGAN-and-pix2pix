@@ -68,12 +68,13 @@ class Pix2PixModel(BaseModel):
         self.input_A.resize_(input_A.size()).copy_(input_A)
         self.input_B.resize_(input_B.size()).copy_(input_B)
         self.image_paths = input['A_paths' if AtoB else 'B_paths']
-        print(self.real_B.size, self.real_A.size)
+
 
     def forward(self):
         self.real_A = Variable(self.input_A)
         self.fake_B = self.netG(self.real_A)
         self.real_B = Variable(self.input_B)
+        print(self.real_B.size, self.real_A.size)
 
     # no backprop gradients
     def test(self):
