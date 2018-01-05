@@ -40,7 +40,7 @@ class multi_image_dataset(BaseDataset):
         A2 = AB[:, h_offset:h_offset + self.opt.fineSize,
             w + w_offset:w + w_offset + self.opt.fineSize]
         B = AB[:, h_offset:h_offset + self.opt.fineSize,
-            2*w + w_offset:w + w_offset + self.opt.fineSize]
+            2*w + w_offset:2*w + w_offset + self.opt.fineSize]
 
         if self.opt.which_direction == 'BtoA':
             input_nc = self.opt.output_nc
