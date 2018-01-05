@@ -74,7 +74,7 @@ class Pix2PixModel(BaseModel):
         self.real_A = Variable(self.input_A)
         self.fake_B = self.netG(self.real_A)
         self.real_B = Variable(self.input_B)
-        print(self.real_B.size, self.real_A.size)
+        print(self.real_B.size(), self.real_A.size())
 
     # no backprop gradients
     def test(self):
@@ -89,7 +89,7 @@ class Pix2PixModel(BaseModel):
     def backward_D(self):
         # Fake
         # stop backprop to the generator by detaching fake_B
-        print(self.fake_B.size, self.real_A.size)
+        print(self.fake_B.size(), self.real_A.size())
         fake_AB = self.fake_AB_pool.query(torch.cat((self.real_A, self.fake_B)))
 
         pred_fake = self.netD(fake_AB.detach())
