@@ -89,9 +89,9 @@ class Pix2PixModel(BaseModel):
     def backward_D(self):
         # Fake
         # stop backprop to the generator by detaching fake_B
-        print(self.fake_B.size(), self.real_A.size())
-        fake_AB = self.fake_AB_pool.query(torch.cat((self.real_A, self.fake_B)))
-
+        #print(self.fake_B.size(), self.real_A.size())
+        fake_AB = self.fake_AB_pool.query(torch.cat((self.real_A[:,:2,:,:],self.real_A[:,3:,:,:], self.fake_B), 1))
+        #print(self.fake_B.size(), self.real_A.size())
         pred_fake = self.netD(fake_AB.detach())
         self.loss_D_fake = self.criterionGAN(pred_fake, False)
 
@@ -107,7 +107,7 @@ class Pix2PixModel(BaseModel):
 
     def backward_G(self):
         # First, G(A) should fake the discriminator
-        fake_AB = torch.cat((self.real_A, self.fake_B), 1)
+        fake_AB = torch.cat((self.real_A[:,:2,:,:], self.real_A[:,3:,:,:], self.fake_B), 1)
         pred_fake = self.netD(fake_AB)
         self.loss_G_GAN = self.criterionGAN(pred_fake, True)
 

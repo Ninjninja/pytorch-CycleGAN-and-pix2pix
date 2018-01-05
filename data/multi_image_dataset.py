@@ -67,7 +67,7 @@ class multi_image_dataset(BaseDataset):
         if output_nc == 1:  # RGB to gray
             tmp = B[0, ...] * 0.299 + B[1, ...] * 0.587 + B[2, ...] * 0.114
             B = tmp.unsqueeze(0)
-        print(B.size(),w_total)
+        #print(B.size(),w_total)
         return {'A': torch.cat([A1, A2], 0), 'B': B,
                 'A_paths': AB_path, 'B_paths': AB_path}
 
