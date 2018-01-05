@@ -74,7 +74,7 @@ class Pix2PixModel(BaseModel):
         self.real_A = Variable(self.input_A)
         self.fake_B = self.netG(self.real_A)
         self.real_B = Variable(self.input_B)
-        print(self.real_B.size(), self.real_A.size())
+        print('real',self.real_B.size(), self.real_A.size())
 
     # no backprop gradients
     def test(self):
