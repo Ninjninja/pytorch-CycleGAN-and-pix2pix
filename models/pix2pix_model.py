@@ -68,6 +68,7 @@ class Pix2PixModel(BaseModel):
         self.input_A.resize_(input_A.size()).copy_(input_A)
         self.input_B.resize_(input_B.size()).copy_(input_B)
         self.image_paths = input['A_paths' if AtoB else 'B_paths']
+        print(torch.size(self.real_B), torch.size(self.real_A))
 
     def forward(self):
         self.real_A = Variable(self.input_A)
@@ -87,7 +88,7 @@ class Pix2PixModel(BaseModel):
     def backward_D(self):
         # Fake
         # stop backprop to the generator by detaching fake_B
-        print (self.real_B,self.real_A)
+        print (torch.size(self.real_B),torch.size(self.real_A))
         fake_AB = self.fake_AB_pool.query(torch.cat((self.real_A, torch.cat((self.real_B,torch.zeros_like(self.real_B)),0)), 1).data)
 
         pred_fake = self.netD(fake_AB.detach())
