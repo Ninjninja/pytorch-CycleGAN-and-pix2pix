@@ -92,7 +92,7 @@ class Pix2PixModel(BaseModel):
         #print(self.fake_B.size(), self.real_A.size())
         slices = torch.split(self.real_A, 3, 1)
         #print(slices[0].size(), slices[1].size())
-        fake_AB = self.fake_AB_pool.query(torch.cat((slices[0], slices[1], self.fake_B), 1).data)
+        fake_AB = self.fake_AB_pool.query(torch.cat((slices[0], slices[1], self.fake_B), 2).data)
         #print(self.fake_B.size(), self.real_A.size())
         print(fake_AB.size())
         pred_fake = self.netD(fake_AB.detach())
