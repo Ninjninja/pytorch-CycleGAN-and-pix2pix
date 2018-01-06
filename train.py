@@ -3,6 +3,7 @@ from options.train_options import TrainOptions
 from data.data_loader import CreateDataLoader
 from models.models import create_model
 from util.visualizer import Visualizer
+import time
 
 opt = TrainOptions().parse()
 data_loader = CreateDataLoader(opt)
@@ -18,14 +19,14 @@ for epoch in range(opt.epoch_count, opt.niter + opt.niter_decay + 1):
     epoch_start_time = time.time()
     epoch_iter = 0
 
-    for i, data in enumerate(dataset):     
+    for i, data in enumerate(dataset):
         iter_start_time = time.time()
         visualizer.reset()
         total_steps += opt.batchSize
         epoch_iter += opt.batchSize
         model.set_input(data)
         model.optimize_parameters()
-
+        time.sleep(2)
         if total_steps % opt.display_freq == 0:
             save_result = total_steps % opt.update_html_freq == 0
             visualizer.display_current_results(model.get_current_visuals(), epoch, save_result)
